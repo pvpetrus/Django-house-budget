@@ -1,0 +1,106 @@
+{% extends "budzetapp/wykresy.html" %}
+
+{% block content %}
+<a id="prostokat3" href="{% url 'wykresy_filtrowanie' %}">Cofnij</a>
+<script>
+$(document).ready(function(){
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for item in qs %}
+            {% if item.type == "przychody" %}
+                    '{{item.category.name}}',
+                    {% endif %}
+                    {% endfor %}],
+            datasets: [
+            {
+                label: 'przychody',
+                data: [{% for item in qs %}
+                {% if item.type == "przychody" %}
+                    {{item.sum}},
+                    {% endif %}
+                    {% endfor %}],
+                backgroundColor: [
+                {% for item in qs %}
+                {% if item.type == "przychody" %}
+                    'rgba(255, 99, 132, 0.2)',
+                    {% endif %}
+                    {% endfor %}
+                ],
+                borderColor: [
+                {% for item in qs %}
+                {% if item.type == "przychody" %}
+                    'rgba(255, 99, 132, 1)',
+                    {% endif %}
+                    {% endfor %}
+                ],
+                borderWidth: 1
+            },
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+
+      }
+        }
+    });
+});
+</script>
+<script>
+$(document).ready(function(){
+    const ctx = document.getElementById('myChart1').getContext('2d');
+    const myChart1 = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for item in qs %}
+            {% if item.type == "przychody" %}
+                    '{{item.category.name}}',
+                    {% endif %}
+                    {% endfor %}],
+            datasets: [
+            {
+                label: 'wydatki',
+                data: [{% for item in qs %}
+                {% if item.type == "wydatki" %}
+                    {{item.sum}},
+                    {% endif %}
+                    {% endfor %}],
+                backgroundColor: [
+                {% for item in qs %}
+                {% if item.type == "wydatki" %}
+                    'rgba(54, 162, 235, 0.2)',
+                    {% endif %}
+                    {% endfor %}
+                ],
+                borderColor: [
+                {% for item in qs %}
+                {% if item.type == "wydatki" %}
+                    'rgba(54, 162, 235, 1)',
+                    {% endif %}
+                    {% endfor %}
+                ],
+                borderWidth: 1
+            },
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+
+      }
+        }
+    });
+});
+</script>
+<form action="" method="post" novalidate>
+{% csrf_token %}
+{{ form.as_p }}
+
+<input type="submit" value="Submit">
+</form>
+</div>
+<canvas id="myChart" width="100" height="30"></canvas>
+<canvas id="myChart1" width="100" height="30"></canvas>
+{% endblock %}}

@@ -1,0 +1,37 @@
+const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['przychody i wydatki'],
+            datasets: [{% for item in qs%}{
+                label: 'przychody',
+                data: [
+                    {{item.sum}},],
+                backgroundColor: [
+                    {% if item.type == "przychody" %}
+                    'rgba(255, 99, 132, 0.2)',
+                    {% else %}
+                    'rgba(54, 162, 235, 0.2)',
+                    {% endif %}
+                ],
+                borderColor: [
+                    {% if item.type == "przychody" %}
+                    'rgba(255, 99, 132, 1)',
+                    {% else %}
+                    'rgba(54, 162, 235, 1)',
+                    {% endif %}
+                ],
+                borderWidth: 1
+            },{% endfor %}]
+        },
+        options: {
+            scales: {
+         xAxes: [{
+            stacked: true // this should be set to make the bars stacked
+         }],
+         yAxes: [{
+            stacked: true // this also..
+         }]
+      }
+        }
+    });

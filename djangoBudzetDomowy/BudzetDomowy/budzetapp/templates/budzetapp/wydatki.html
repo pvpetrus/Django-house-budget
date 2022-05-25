@@ -1,0 +1,29 @@
+{% extends "budzetapp/base.html" %}
+
+{% block title %}bukawydatki{% endblock %}
+{% block podtytulstrony %}Wydatki{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+<form action="" method="POST">
+{% csrf_token %}
+
+    <div class="formularz">Suma:
+        <input class="poledowpisywania" type="text" name="sum" />
+    </div>
+    <div class="formularz">Kategoria:
+        <input class="poledowpisywania"  type="text" name="category" />
+    </div>
+    <div class="formularz">Data:
+        <input class="poledowpisywania"  type="date" name="date" />
+    </div>
+    <div class="formularz">
+        <button id="blocktext" type="submit">Potwierdź</button>
+    </div>
+</form>
+<a id="prostokat3" href="{% url 'userInterface' %}">Cofnij</a>
+
+{% else %}
+    <p id="prostokat1">You are not logged in</p>
+    <a id="prostokat2" href="{% url 'login' %}">Zaloguj</a>
+{% endif %}
+{% endblock %}
